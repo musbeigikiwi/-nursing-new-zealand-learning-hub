@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nursing New Zealand | Learning Hub</title>
 <style>
-*{box-sizing:border-box}html{scroll-behavior:smooth;min-height:100%}body{margin:0;min-height:100dvh;display:flex;flex-direction:column;font-family:"Avenir Next","Segoe UI",Inter,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#061a2c;color:#10233f;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+*{box-sizing:border-box}html{scroll-behavior:smooth;min-height:100%;background:#0d3155}body{margin:0;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;font-family:"Avenir Next","Segoe UI",Inter,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#061a2c;color:#10233f;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 :root{--navy:#072642;--navy2:#0c355b;--teal:#159894;--mint:#55d8c8;--red:#ef3743;--line:#d8e2ef}
 .news{height:44px;overflow:hidden;background:#169b97;color:#fff;font-weight:800;display:flex;align-items:center;white-space:nowrap}
 .track{display:inline-block;min-width:max-content;animation:ticker 34s linear infinite}.track span{padding:0 34px}@keyframes ticker{from{transform:translateX(-100%)}to{transform:translateX(100vw)}}
@@ -25,7 +25,9 @@
 .feedback{margin-top:14px;padding:15px;border-radius:12px;background:#f3f7fb;display:none}.nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}.nav button{border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}.next{background:#143b68;color:#fff}.prev{background:#e8eff8;color:#173457}
 .sa{display:none}.sa textarea{width:100%;min-height:150px;padding:15px;border:2px solid var(--line);border-radius:13px;font:inherit}.model{display:none;margin-top:14px;padding:16px;background:#edfdf5;border-radius:13px}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);align-items:center;justify-content:center;z-index:30;padding:20px}.modal.open{display:flex}.modal-card{background:#fff;border-radius:20px;padding:24px;text-align:center;max-width:430px;width:100%}.qr{width:min(80vw,330px);border-radius:16px}
-.site-footer{background:#0d3155;color:#d9e8f4;border-top:1px solid #2c5878;padding:24px 38px;margin-top:auto;flex-shrink:0}.footer-inner{width:min(100%,1600px);margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.footer-brand{font-weight:800;color:#fff}.footer-sub{font-size:14px;color:#9db5c8;margin-top:4px}.footer-motto{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:#f4d56f;font-weight:700}
+.site-footer{background:#0d3155;color:#d9e8f4;border-top:1px solid #2c5878;padding:24px 38px;margin-top:0;flex-shrink:0;position:relative;z-index:2}.footer-inner{width:min(100%,1600px);margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.footer-brand{font-weight:800;color:#fff}.footer-sub{font-size:14px;color:#9db5c8;margin-top:4px}.footer-motto{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:#f4d56f;font-weight:700}
+.site-footer::after{content:"";position:absolute;left:0;right:0;top:100%;height:max(0px,env(safe-area-inset-bottom));background:#0d3155}
+.page-end{height:0;background:#0d3155;flex:0 0 0}
 
 /* ===== Responsive academic layout ===== */
 body{min-width:0}
@@ -219,6 +221,7 @@ textarea{max-width:100%}
     <div class="footer-motto">In God We Trust</div>
   </div>
 </footer>
+<div class="page-end" aria-hidden="true"></div>
 
 <div class="modal" id="mistakeModal"><div class="modal-card" style="max-width:720px;text-align:left"><h2>Review mistakes</h2><div id="mistakeList"></div><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px"><button class="btn blue" id="retryMistakes">↻ Retry mistakes</button><button class="btn teal" id="closeMistakes">Close</button></div></div></div><div class="modal" id="qrModal"><div class="modal-card"><h2>Nursing New Zealand</h2><p>Scan to open our YouTube channel.</p><img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=700x700&margin=18&data=https%3A%2F%2Fyoutube.com%2F%40nursingnewzealand" alt="QR code"><p><a href="https://youtube.com/@nursingnewzealand" target="_blank">youtube.com/@nursingnewzealand</a></p><button class="btn teal" id="closeQr">Close</button></div></div>
 
