@@ -361,7 +361,7 @@ const DB={
 ]}
 };
 
-const state={chapter:5,mode:"mcq",questions:[],sa:[],i:0,si:0,answered:0,correct:0,start:Date.now(),mistakes:[],reviewMode:false,reviewReturn:null};
+const state={chapter:5,mode:"mcq",questions:[],sa:[],i:0,si:0,answered:0,correct:0,start:Date.now(),mistakes:[],reviewMode:false,reviewReturn:null,baseCorrect:0};
 const $=id=>document.getElementById(id);
 function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
 function prepQuestions(ch){
@@ -373,7 +373,7 @@ function prepQuestions(ch){
 }
 function prepSA(ch){return shuffle(DB[ch].sa.map(x=>[...x]))}
 function reset(ch=state.chapter){
-  state.chapter=ch;state.questions=prepQuestions(ch);state.sa=prepSA(ch);state.i=0;state.si=0;state.answered=0;state.correct=0;state.start=Date.now();state.mistakes=[];state.reviewMode=false;
+  state.chapter=ch;state.questions=prepQuestions(ch);state.sa=prepSA(ch);state.i=0;state.si=0;state.answered=0;state.correct=0;state.baseCorrect=0;state.start=Date.now();state.mistakes=[];state.reviewMode=false;state.reviewReturn=null;
   document.querySelectorAll(".chapter").forEach(b=>b.classList.toggle("active",Number(b.dataset.c)===ch));
   $("chapterTitle").textContent="Chapter "+ch+" • "+DB[ch].title;
   render();
@@ -410,10 +410,27 @@ document.querySelectorAll(".chapter").forEach(b=>b.onclick=()=>reset(Number(b.da
 $("shuffleBtn").onclick=()=>reset(state.chapter);$("globalShuffle").onclick=()=>reset(state.chapter);
 $("mcqTab").onclick=()=>{state.mode="mcq";render()};$("saTab").onclick=()=>{state.mode="sa";render()};
 $("prev").onclick=()=>{if(state.i>0){state.i--;renderMCQ()}};
-$("next").onclick=()=>{if(state.i<state.questions.length-1){state.i++;renderMCQ()}else if(state.reviewMode){finishReview()}};
+$("next").onclick=()=>{if(state.i<state.questions.length-1){state.i++;renderMCQ()}else if(state.reviewMode){finishReview()}else{finishMainQuiz()}};
 $("saPrev").onclick=()=>{if(state.si>0){state.si--;renderSA()}};
 $("saNext").onclick=()=>{if(state.si<4){state.si++;renderSA()}};
 $("reveal").onclick=()=>{$("model").style.display="block"};
+
+function finishMainQuiz(){
+  const remaining=state.mistakes.length;
+  state.baseCorrect=state.correct;
+  const list=$("mistakeList");
+  if(remaining===0){
+    list.innerHTML="<p style='font-size:20px'><b>✅ Chapter complete: 25/25</b></p><p>Excellent — you answered all 25 questions correctly.</p>";
+    $("retryMistakes").style.display="none";
+    $("resetReview").style.display="none";
+  }else{
+    list.innerHTML="<p style='font-size:20px'><b>Your score: "+state.correct+"/25</b></p><p>You have <b>"+remaining+"</b> question(s) remaining in Review. Complete them to work toward 25/25.</p>";
+    $("retryMistakes").style.display="inline-flex";
+    $("retryMistakes").textContent="▶ Review "+remaining+" mistakes";
+    $("resetReview").style.display="inline-flex";
+  }
+  $("mistakeModal").classList.add("open");
+}
 
 $("reviewMistakes").onclick=()=>{
   const list=$("mistakeList");
@@ -440,6 +457,7 @@ function startMistakeReview(){
       answered:state.answered,
       correct:state.correct
     };
+    state.baseCorrect=state.correct;
   }
   state.questions=shuffle(state.mistakes.map(m=>{
     const packed=m.options.map((text,index)=>({text,ok:index===m.correct}));
@@ -456,13 +474,15 @@ function finishReview(){
   const remaining=[...state.mistakes];
   const reviewed=state.questions.length;
   const reviewCorrect=state.correct;
+  const cumulative=Math.min(25,state.baseCorrect+(reviewed-remaining.length));
 
   if(state.reviewReturn){
     state.questions=state.reviewReturn.questions;
     state.i=state.reviewReturn.i;
     state.answered=state.reviewReturn.answered;
-    state.correct=state.reviewReturn.correct;
+    state.correct=cumulative;
   }
+  state.baseCorrect=cumulative;
   state.reviewReturn=null;
   state.reviewMode=false;
   state.mode="mcq";
@@ -473,13 +493,13 @@ function finishReview(){
 
   const list=$("mistakeList");
   if(remaining.length===0){
-    list.innerHTML="<p style='font-size:18px'><b>✅ Review complete!</b></p><p>You answered all "+reviewed+" reviewed question(s) correctly. No mistakes remain.</p>";
+    list.innerHTML="<p style='font-size:20px'><b>✅ Final score: 25/25</b></p><p>You corrected all remaining mistakes. Chapter complete.</p>";
     $("retryMistakes").style.display="none";
     $("resetReview").style.display="none";
   }else{
-    list.innerHTML="<p style='font-size:18px'><b>Review complete</b></p><p>You got <b>"+reviewCorrect+" of "+reviewed+"</b> correct in this review. <b>"+remaining.length+"</b> question(s) still need practice.</p>";
+    list.innerHTML="<p style='font-size:20px'><b>Current score: "+cumulative+"/25</b></p><p>You corrected <b>"+(reviewed-remaining.length)+"</b> question(s) in this review. <b>"+remaining.length+"</b> question(s) still remain.</p>";
     $("retryMistakes").style.display="inline-flex";
-    $("retryMistakes").textContent="↻ Retry remaining mistakes";
+    $("retryMistakes").textContent="↻ Retry remaining "+remaining.length;
     $("resetReview").style.display="inline-flex";
   }
 
