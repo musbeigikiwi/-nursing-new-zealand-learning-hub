@@ -61,7 +61,33 @@
     .subscribe{background:linear-gradient(135deg,#ff3a43,#d90010)}
     .qrbtn{background:linear-gradient(135deg,var(--teal2),#08706d)}
     .shuffle{background:linear-gradient(135deg,#334dff,#1928b8)}
-    .framewrap{height:calc(100vh - 72px);background:#fff}
+    .ticker{
+      height:38px;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      white-space:nowrap;
+      background:#0b8f8a;
+      color:#fff;
+      border-bottom:1px solid rgba(255,255,255,.18);
+      position:relative;
+      z-index:9;
+      font-weight:800;
+      letter-spacing:.02em;
+    }
+    .ticker-track{
+      display:inline-block;
+      min-width:max-content;
+      padding-left:0;
+      will-change:transform;
+      animation:tickerLTR 16s linear infinite;
+    }
+    .ticker-text{padding:0 34px}
+    @keyframes tickerLTR{
+      from{transform:translateX(-100%)}
+      to{transform:translateX(100vw)}
+    }
+    .framewrap{height:calc(100vh - 110px);background:#fff}
     iframe{display:block;border:0;width:100%;height:100%;background:#fff}
     .modal{
       position:fixed;inset:0;z-index:1000;
@@ -107,13 +133,13 @@
       .brand{width:100%;margin:0;text-align:center;font-size:13px}
       .actions{width:100%;gap:7px}
       .btn{min-height:42px;padding:0 12px;font-size:13px;flex:1 1 30%}
-      .framewrap{height:calc(100vh - 112px)}
+      .framewrap{height:calc(100vh - 150px)}
     }
     @media(max-width:430px){
       .btn{flex:1 1 46%}
       .shuffle{flex-basis:96%}
       .topbar{min-height:158px}
-      .framewrap{height:calc(100vh - 158px)}
+      .framewrap{height:calc(100vh - 196px)}
     }
   </style>
 </head>
@@ -126,6 +152,14 @@
       <button class="btn shuffle" id="shuffleAll" type="button">↻ Shuffle MCQs + Questions</button>
     </div>
   </header>
+
+  <div class="ticker" aria-label="Website credits">
+    <div class="ticker-track">
+      <span class="ticker-text">This website was built by Mustafa Beigi &amp; Prabu</span>
+      <span class="ticker-text">•</span>
+      <span class="ticker-text">This website was built by Mustafa Beigi &amp; Prabu</span>
+    </div>
+  </div>
 
   <main class="framewrap">
     <iframe
