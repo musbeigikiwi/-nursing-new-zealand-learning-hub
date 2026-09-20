@@ -5,9 +5,179 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nursing New Zealand | Exam Hub</title>
   <meta name="description" content="Interactive anatomy and physiology revision for future nursing students." />
-  <style>*{box-sizing:border-box}body{margin:0;background:#062a36}iframe{display:block;border:0;width:100%;height:100vh;background:#fff}</style>
+  <style>
+    *{box-sizing:border-box}
+    :root{
+      --navy:#062a36;
+      --navy2:#0a3b4a;
+      --teal:#0b8f8a;
+      --teal2:#0aa8a0;
+      --red:#ff1f2d;
+      --white:#fff;
+    }
+    html,body{margin:0;height:100%;background:var(--navy);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body{overflow:hidden}
+    .topbar{
+      min-height:72px;
+      padding:10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      background:linear-gradient(135deg,var(--navy),var(--navy2));
+      border-bottom:1px solid rgba(255,255,255,.12);
+      box-shadow:0 8px 25px rgba(0,0,0,.22);
+      position:relative;
+      z-index:10;
+    }
+    .brand{
+      color:#eaffff;
+      font-weight:800;
+      letter-spacing:.04em;
+      margin-right:auto;
+      white-space:nowrap;
+      font-size:14px;
+    }
+    .actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:center}
+    .btn{
+      border:0;
+      border-radius:14px;
+      min-height:46px;
+      padding:0 18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      color:#fff;
+      font-weight:800;
+      font-size:15px;
+      text-decoration:none;
+      cursor:pointer;
+      box-shadow:0 7px 18px rgba(0,0,0,.18);
+      transition:transform .15s ease,filter .15s ease;
+    }
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+    .subscribe{background:linear-gradient(135deg,#ff3a43,#d90010)}
+    .qrbtn{background:linear-gradient(135deg,var(--teal2),#08706d)}
+    .shuffle{background:linear-gradient(135deg,#334dff,#1928b8)}
+    .framewrap{height:calc(100vh - 72px);background:#fff}
+    iframe{display:block;border:0;width:100%;height:100%;background:#fff}
+    .modal{
+      position:fixed;inset:0;z-index:1000;
+      display:none;align-items:center;justify-content:center;
+      padding:22px;background:rgba(1,17,22,.82);
+      backdrop-filter:blur(7px);
+    }
+    .modal.open{display:flex}
+    .card{
+      width:min(92vw,470px);
+      max-height:92vh;
+      overflow:auto;
+      background:#fff;
+      border-radius:24px;
+      padding:24px;
+      text-align:center;
+      box-shadow:0 28px 80px rgba(0,0,0,.35);
+    }
+    .card h2{margin:0 0 6px;color:#072f3a;font-size:25px}
+    .card p{margin:0 0 16px;color:#4a5d63}
+    .qr{
+      display:block;
+      width:min(72vw,330px);
+      height:min(72vw,330px);
+      margin:0 auto 16px;
+      border:10px solid #fff;
+      border-radius:18px;
+      box-shadow:0 6px 24px rgba(0,0,0,.14);
+      background:#fff;
+    }
+    .link{
+      display:block;
+      word-break:break-all;
+      color:#075f75;
+      font-weight:700;
+      margin:8px 0 16px;
+      text-decoration:none;
+    }
+    .modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .close{background:#20353c}
+    @media(max-width:720px){
+      .topbar{min-height:112px;padding:9px 10px}
+      .brand{width:100%;margin:0;text-align:center;font-size:13px}
+      .actions{width:100%;gap:7px}
+      .btn{min-height:42px;padding:0 12px;font-size:13px;flex:1 1 30%}
+      .framewrap{height:calc(100vh - 112px)}
+    }
+    @media(max-width:430px){
+      .btn{flex:1 1 46%}
+      .shuffle{flex-basis:96%}
+      .topbar{min-height:158px}
+      .framewrap{height:calc(100vh - 158px)}
+    }
+  </style>
 </head>
 <body>
-  <iframe title="Nursing New Zealand Exam Hub" src="https://nursing-nz-exam-hub.beigimustafa77.chatgpt.site" allow="fullscreen"></iframe>
+  <header class="topbar">
+    <div class="brand">NURSING NEW ZEALAND • LEARNING HUB</div>
+    <div class="actions">
+      <a class="btn subscribe" href="https://youtube.com/@nursingnewzealand?si=rmBQow8jbe6t5Ps0" target="_blank" rel="noopener noreferrer">▶ Subscribe</a>
+      <button class="btn qrbtn" id="openQr" type="button">▦ QR Code</button>
+      <button class="btn shuffle" id="shuffleAll" type="button">↻ Shuffle MCQs + Questions</button>
+    </div>
+  </header>
+
+  <main class="framewrap">
+    <iframe
+      id="examHub"
+      title="Nursing New Zealand Exam Hub"
+      src="https://nursing-nz-exam-hub.beigimustafa77.chatgpt.site"
+      allow="fullscreen"
+    ></iframe>
+  </main>
+
+  <div class="modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrTitle">
+    <div class="card">
+      <h2 id="qrTitle">Nursing New Zealand</h2>
+      <p>Scan the QR code or open the channel directly.</p>
+      <img
+        class="qr"
+        alt="QR code for Nursing New Zealand YouTube channel"
+        src="https://api.qrserver.com/v1/create-qr-code/?size=700x700&margin=18&data=https%3A%2F%2Fyoutube.com%2F%40nursingnewzealand%3Fsi%3DrmBQow8jbe6t5Ps0"
+      />
+      <a class="link" href="https://youtube.com/@nursingnewzealand?si=rmBQow8jbe6t5Ps0" target="_blank" rel="noopener noreferrer">
+        youtube.com/@nursingnewzealand
+      </a>
+      <div class="modal-actions">
+        <a class="btn subscribe" href="https://youtube.com/@nursingnewzealand?si=rmBQow8jbe6t5Ps0" target="_blank" rel="noopener noreferrer">▶ Open YouTube</a>
+        <button class="btn close" id="closeQr" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const frame = document.getElementById('examHub');
+    const modal = document.getElementById('qrModal');
+    const openQr = document.getElementById('openQr');
+    const closeQr = document.getElementById('closeQr');
+    const shuffleAll = document.getElementById('shuffleAll');
+
+    openQr.addEventListener('click', () => modal.classList.add('open'));
+    closeQr.addEventListener('click', () => modal.classList.remove('open'));
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('open');
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') modal.classList.remove('open');
+    });
+
+    // Reloading starts a fresh quiz session. The embedded exam hub shuffles
+    // its question order on a fresh load/reset, so this refreshes both MCQs
+    // and the question set together.
+    shuffleAll.addEventListener('click', () => {
+      const base = 'https://nursing-nz-exam-hub.beigimustafa77.chatgpt.site';
+      frame.src = base + '?shuffle=' + Date.now();
+    });
+  </script>
 </body>
 </html>
