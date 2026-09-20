@@ -88,24 +88,26 @@
     iframe{display:block;border:0;width:100%;height:100%;background:#fff}
     .iframe-mask{
       position:absolute;
-      z-index:20;
+      z-index:9999;
       pointer-events:none;
-      background:#092d4f;
-      border-radius:10px;
     }
+    /* Covers only the duplicate News badge inside the embedded app header */
     .mask-news{
-      top:34px;
-      left:36.1%;
-      width:88px;
-      height:42px;
+      top:22px;
+      left:32%;
+      width:150px;
+      height:70px;
+      background:#0a3155;
+      border-radius:0;
     }
+    /* Covers the duplicate lower YouTube subscribe CTA */
     .mask-subscribe{
-      top:172px;
-      right:3.8%;
-      width:295px;
-      height:78px;
-      background:#061b33;
-      border-radius:14px;
+      top:145px;
+      right:0;
+      width:360px;
+      height:115px;
+      background:#071d35;
+      border-radius:0;
     }
     .modal{
       position:fixed;inset:0;z-index:1000;
@@ -146,25 +148,49 @@
     }
     .modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
     .close{background:#20353c}
-    @media(max-width:1100px){
-      .mask-news{top:32px;left:35%;width:78px;height:40px}
-      .mask-subscribe{top:168px;right:3.5%;width:250px;height:72px}
+    @media(max-width:1200px){
+      .mask-news{
+        top:22px;
+        left:31%;
+        width:165px;
+        height:72px;
+      }
+      .mask-subscribe{
+        top:145px;
+        right:0;
+        width:330px;
+        height:118px;
+      }
+    }
+    @media(max-width:900px){
+      .mask-news{
+        top:20px;
+        left:30%;
+        width:150px;
+        height:70px;
+      }
+      .mask-subscribe{
+        top:140px;
+        right:0;
+        width:280px;
+        height:115px;
+      }
     }
     @media(max-width:720px){
       .topbar{min-height:132px;padding:0 10px 9px}
       .actions{width:100%;gap:7px}
       .btn{min-height:42px;padding:0 12px;font-size:13px;flex:1 1 30%}
       .framewrap{height:calc(100vh - 132px)}
-      .mask-news{top:31px;left:34%;width:72px;height:38px}
-      .mask-subscribe{top:164px;right:3%;width:210px;height:68px}
+      .mask-news{top:18px;left:28%;width:145px;height:68px}
+      .mask-subscribe{top:135px;right:0;width:235px;height:108px}
     }
     @media(max-width:430px){
       .btn{flex:1 1 46%}
       .shuffle{flex-basis:96%}
       .topbar{min-height:176px}
       .framewrap{height:calc(100vh - 176px)}
-      .mask-news{display:none}
-      .mask-subscribe{top:162px;right:10px;width:185px;height:64px}
+      .mask-news{top:16px;left:25%;width:135px;height:64px}
+      .mask-subscribe{top:130px;right:0;width:205px;height:105px}
     }
   </style>
 </head>
@@ -189,7 +215,7 @@
     <iframe
       id="examHub"
       title="Nursing New Zealand Exam Hub"
-      src="https://nursing-nz-exam-hub.beigimustafa77.chatgpt.site"
+      src="https://nursing-nz-exam-hub.beigimustafa77.chatgpt.site?embedded=1&v=20260920-1700"
       allow="fullscreen"
     ></iframe>
     <div class="iframe-mask mask-news" aria-hidden="true"></div>
