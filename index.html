@@ -18,8 +18,8 @@
     html,body{margin:0;height:100%;background:var(--navy);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     body{overflow:hidden}
     .topbar{
-      min-height:72px;
-      padding:10px 14px;
+      min-height:110px;
+      padding:10px 14px 0;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -30,6 +30,7 @@
       box-shadow:0 8px 25px rgba(0,0,0,.22);
       position:relative;
       z-index:10;
+      overflow:hidden;
     }
     .brand{
       color:#eaffff;
@@ -62,6 +63,9 @@
     .qrbtn{background:linear-gradient(135deg,var(--teal2),#08706d)}
     .shuffle{background:linear-gradient(135deg,#334dff,#1928b8)}
     .ticker{
+      flex:0 0 calc(100% + 28px);
+      width:calc(100% + 28px);
+      margin:0 -14px;
       height:38px;
       display:flex;
       align-items:center;
@@ -69,9 +73,9 @@
       white-space:nowrap;
       background:#0b8f8a;
       color:#fff;
-      border-bottom:1px solid rgba(255,255,255,.18);
+      border-top:1px solid rgba(255,255,255,.14);
       position:relative;
-      z-index:9;
+      z-index:11;
       font-weight:800;
       letter-spacing:.02em;
     }
@@ -129,7 +133,7 @@
     .modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
     .close{background:#20353c}
     @media(max-width:720px){
-      .topbar{min-height:112px;padding:9px 10px}
+      .topbar{min-height:150px;padding:9px 10px 0}
       .brand{width:100%;margin:0;text-align:center;font-size:13px}
       .actions{width:100%;gap:7px}
       .btn{min-height:42px;padding:0 12px;font-size:13px;flex:1 1 30%}
@@ -138,7 +142,7 @@
     @media(max-width:430px){
       .btn{flex:1 1 46%}
       .shuffle{flex-basis:96%}
-      .topbar{min-height:158px}
+      .topbar{min-height:196px}
       .framewrap{height:calc(100vh - 196px)}
     }
   </style>
@@ -151,15 +155,15 @@
       <button class="btn qrbtn" id="openQr" type="button">▦ QR Code</button>
       <button class="btn shuffle" id="shuffleAll" type="button">↻ Shuffle MCQs + Questions</button>
     </div>
-  </header>
 
-  <div class="ticker" aria-label="Website credits">
-    <div class="ticker-track">
-      <span class="ticker-text">This website was built by Mustafa Beigi &amp; Prabu</span>
-      <span class="ticker-text">•</span>
-      <span class="ticker-text">This website was built by Mustafa Beigi &amp; Prabu</span>
+    <div class="ticker" aria-label="News and website credits">
+      <div class="ticker-track">
+        <span class="ticker-text">NEWS • This website was built by Mustafa Beigi &amp; Prabu</span>
+        <span class="ticker-text">•</span>
+        <span class="ticker-text">NEWS • This website was built by Mustafa Beigi &amp; Prabu</span>
+      </div>
     </div>
-  </div>
+  </header>
 
   <main class="framewrap">
     <iframe
