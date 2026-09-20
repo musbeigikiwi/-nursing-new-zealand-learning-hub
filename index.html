@@ -1,215 +1,279 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nursing New Zealand | Exam Hub</title>
-  <meta name="description" content="Interactive anatomy and physiology revision for future nursing students." />
-  <style>
-    *{box-sizing:border-box}
-    :root{
-      --navy:#062a36;
-      --navy2:#0a3b4a;
-      --teal:#0b8f8a;
-      --teal2:#0aa8a0;
-      --red:#ff1f2d;
-      --white:#fff;
-    }
-    html,body{margin:0;height:100%;background:var(--navy);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    body{overflow:hidden}
-    .topbar{
-      min-height:92px;
-      padding:0 14px 10px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      flex-wrap:wrap;
-      background:linear-gradient(135deg,var(--navy),var(--navy2));
-      border-bottom:1px solid rgba(255,255,255,.12);
-      box-shadow:0 8px 25px rgba(0,0,0,.22);
-      position:relative;
-      z-index:10;
-      overflow:hidden;
-    }
-    .actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:center}
-    .btn{
-      border:0;
-      border-radius:14px;
-      min-height:46px;
-      padding:0 18px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      color:#fff;
-      font-weight:800;
-      font-size:15px;
-      text-decoration:none;
-      cursor:pointer;
-      box-shadow:0 7px 18px rgba(0,0,0,.18);
-      transition:transform .15s ease,filter .15s ease;
-    }
-    .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
-    .subscribe{background:linear-gradient(135deg,#ff3a43,#d90010)}
-    .qrbtn{background:linear-gradient(135deg,var(--teal2),#08706d)}
-    .shuffle{background:linear-gradient(135deg,#334dff,#1928b8)}
-    .ticker{
-      order:-1;
-      flex:0 0 calc(100% + 28px);
-      width:calc(100% + 28px);
-      margin:0 -14px 2px;
-      height:36px;
-      display:flex;
-      align-items:center;
-      overflow:hidden;
-      white-space:nowrap;
-      background:#0b8f8a;
-      color:#fff;
-      border-bottom:1px solid rgba(255,255,255,.16);
-      position:relative;
-      z-index:11;
-      font-weight:800;
-      letter-spacing:.02em;
-    }
-    .ticker-track{
-      display:inline-block;
-      min-width:max-content;
-      padding-left:0;
-      will-change:transform;
-      animation:tickerLTR 16s linear infinite;
-    }
-    .ticker-text{padding:0 34px}
-    @keyframes tickerLTR{
-      from{transform:translateX(-100%)}
-      to{transform:translateX(100vw)}
-    }
-    .framewrap{height:calc(100vh - 92px);background:#fff;position:relative;overflow:hidden}
-    iframe{display:block;border:0;width:100%;height:100%;background:#fff}
-    .modal{
-      position:fixed;inset:0;z-index:1000;
-      display:none;align-items:center;justify-content:center;
-      padding:22px;background:rgba(1,17,22,.82);
-      backdrop-filter:blur(7px);
-    }
-    .modal.open{display:flex}
-    .card{
-      width:min(92vw,470px);
-      max-height:92vh;
-      overflow:auto;
-      background:#fff;
-      border-radius:24px;
-      padding:24px;
-      text-align:center;
-      box-shadow:0 28px 80px rgba(0,0,0,.35);
-    }
-    .card h2{margin:0 0 6px;color:#072f3a;font-size:25px}
-    .card p{margin:0 0 16px;color:#4a5d63}
-    .qr{
-      display:block;
-      width:min(72vw,330px);
-      height:min(72vw,330px);
-      margin:0 auto 16px;
-      border:10px solid #fff;
-      border-radius:18px;
-      box-shadow:0 6px 24px rgba(0,0,0,.14);
-      background:#fff;
-    }
-    .link{
-      display:block;
-      word-break:break-all;
-      color:#075f75;
-      font-weight:700;
-      margin:8px 0 16px;
-      text-decoration:none;
-    }
-    .modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-    .close{background:#20353c}
-    }
-    @media(max-width:720px){
-      .topbar{min-height:132px;padding:0 10px 9px}
-      .actions{width:100%;gap:7px}
-      .btn{min-height:42px;padding:0 12px;font-size:13px;flex:1 1 30%}
-      .framewrap{height:calc(100vh - 132px)}
-
-    }
-    @media(max-width:430px){
-      .btn{flex:1 1 46%}
-      .shuffle{flex-basis:96%}
-      .topbar{min-height:176px}
-      .framewrap{height:calc(100vh - 176px)}
-
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nursing New Zealand | Learning Hub</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#061a2c;color:#10233f}
+:root{--navy:#072642;--navy2:#0c355b;--teal:#159894;--mint:#55d8c8;--red:#ef3743;--line:#d8e2ef}
+.news{height:44px;overflow:hidden;background:#169b97;color:#fff;font-weight:800;display:flex;align-items:center;white-space:nowrap}
+.track{display:inline-block;min-width:max-content;animation:ticker 18s linear infinite}.track span{padding:0 34px}@keyframes ticker{from{transform:translateX(-100%)}to{transform:translateX(100vw)}}
+.top{background:#073246;padding:15px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;border-bottom:3px solid #199d9a}
+.btn{border:0;border-radius:15px;padding:14px 21px;color:#fff;font-weight:800;font-size:16px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.red{background:var(--red)}.teal{background:#149a96}.blue{background:#3344df}
+.header{background:#0d3155;color:#fff;padding:18px 38px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #3d6a87}
+.brand{display:flex;align-items:center;gap:14px}.logo{width:70px;height:70px;border-radius:20px;background:white;display:grid;place-items:center;font-weight:900;color:#0a6c74}.brand small{letter-spacing:.18em;color:#70e6eb;font-weight:800}.brand h1{font-size:22px;margin:6px 0 0}
+.hero{background:#061a2c;color:#fff;padding:26px 38px}.hero small{color:#64d8df;letter-spacing:.18em;font-weight:800}.hero h2{font-size:30px;margin:12px 0 6px}.hero p{color:#bfccda;margin:0}
+.layout{display:grid;grid-template-columns:310px 1fr;gap:28px;padding:26px 38px;background:#061a2c;min-height:650px}
+.sidebar{background:#12365e;border-radius:18px;padding:20px;color:#fff;height:max-content}.chapter{width:100%;text-align:left;padding:17px;border:0;border-radius:13px;margin:6px 0;background:#214878;color:#fff;cursor:pointer}.chapter.active{background:linear-gradient(135deg,#63dce6,#42d79f);color:#07324f}.chapter b{font-size:19px}.chapter span{display:block;margin-top:6px;opacity:.8}
+.score{margin-top:20px;background:#07182c;border-radius:16px;padding:18px}.score strong{font-size:30px;color:#60deef}
+.card{background:#fff;border-radius:18px;padding:28px;min-width:0}.card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:12px 15px;border-radius:12px;border:0;font-weight:800;background:#e8eff8;color:#173457;cursor:pointer}.chip.active{background:#143b68;color:#fff}.chip.shuffle{background:#e9fbfb;color:#14737d;border:1px solid #bde9e7}
+.progress{height:10px;background:#dae3ef;border-radius:99px;overflow:hidden;margin:25px 0}.progress>div{height:100%;background:#25c3a8;width:0}
+.qmeta{color:#657793;font-weight:700}.timer{display:inline-block;margin-top:8px;padding:10px 14px;background:#ecfbfb;border:1px solid #bce7e7;border-radius:12px;color:#136d72;font-weight:800}
+.question{font-size:25px;margin:24px 0 18px}.option{width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:14px;padding:17px 18px;margin:8px 0;font-size:18px;font-weight:700;cursor:pointer;display:flex;gap:12px;align-items:center}.option:hover{border-color:#85cbd1}.letter{width:30px;height:30px;border-radius:50%;background:#edf2f8;display:grid;place-items:center;font-size:14px}.option.correct{border-color:#33b979;background:#edfdf5}.option.wrong{border-color:#e95767;background:#fff1f3}
+.feedback{margin-top:14px;padding:15px;border-radius:12px;background:#f3f7fb;display:none}.nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}.nav button{border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}.next{background:#143b68;color:#fff}.prev{background:#e8eff8;color:#173457}
+.sa{display:none}.sa textarea{width:100%;min-height:150px;padding:15px;border:2px solid var(--line);border-radius:13px;font:inherit}.model{display:none;margin-top:14px;padding:16px;background:#edfdf5;border-radius:13px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);align-items:center;justify-content:center;z-index:30;padding:20px}.modal.open{display:flex}.modal-card{background:#fff;border-radius:20px;padding:24px;text-align:center;max-width:430px;width:100%}.qr{width:min(80vw,330px);border-radius:16px}
+@media(max-width:850px){.layout{grid-template-columns:1fr;padding:16px}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.score{grid-column:1/-1}.header{padding:14px 18px}.hero{padding:20px}.card{padding:20px}}
+@media(max-width:520px){.sidebar{grid-template-columns:1fr}.btn{font-size:13px;padding:12px}.question{font-size:21px}.brand h1{font-size:18px}}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="actions">
-      <a class="btn subscribe" href="https://youtube.com/@nursingnewzealand?si=rmBQow8jbe6t5Ps0" target="_blank" rel="noopener noreferrer">▶ Subscribe</a>
-      <button class="btn qrbtn" id="openQr" type="button">▦ QR Code</button>
-      <button class="btn shuffle" id="shuffleAll" type="button">↻ Shuffle MCQs + Questions</button>
-    </div>
+<div class="news"><div class="track"><span>NEWS • This website was built by Mustafa Beigi &amp; Prabu</span><span>•</span><span>NEWS • This website was built by Mustafa Beigi &amp; Prabu</span></div></div>
+<div class="top">
+<a class="btn red" href="https://youtube.com/@nursingnewzealand" target="_blank">▶ Subscribe</a>
+<button class="btn teal" id="qrBtn">▦ QR Code</button>
+<button class="btn blue" id="globalShuffle">↻ Shuffle MCQs + Questions</button>
+</div>
+<header class="header">
+<div class="brand"><div class="logo">NZ</div><div><small>NURSING NEW ZEALAND</small><h1>Learning Hub</h1></div></div>
+<div><b>120 practice questions</b></div>
+</header>
+<section class="hero"><small>STUDY • PRACTISE • GROW</small><h2>Learn anatomy with confidence.</h2><p>Tap an answer for instant feedback, explanation and focused revision.</p></section>
 
-    <div class="ticker" aria-label="News and website credits">
-      <div class="ticker-track">
-        <span class="ticker-text">NEWS • This website was built by Mustafa Beigi &amp; Prabu</span>
-        <span class="ticker-text">•</span>
-        <span class="ticker-text">NEWS • This website was built by Mustafa Beigi &amp; Prabu</span>
-      </div>
-    </div>
-  </header>
+<main class="layout">
+<aside class="sidebar">
+<div><b>Choose chapter</b></div>
+<button class="chapter active" data-c="5"><b>Chapter 5</b><span>Tissues & Integumentary</span></button>
+<button class="chapter" data-c="6"><b>Chapter 6</b><span>Blood</span></button>
+<button class="chapter" data-c="7"><b>Chapter 7</b><span>Cardiovascular & Lymphatic</span></button>
+<button class="chapter" data-c="8"><b>Chapter 8</b><span>Respiratory System</span></button>
+<div class="score">Chapter score<br><strong id="score">0/25</strong><div id="accuracy">Progress: 0% · Accuracy: 0%</div></div>
+</aside>
 
-  <main class="framewrap">
-    <iframe
-      id="examHub"
-      title="Nursing New Zealand Exam Hub"
-      src="https://nursing-nz-exam-hub.beigimustafa77.chatgpt.site?embedded=1&v=20260920-1700"
-      allow="fullscreen"
-    ></iframe>
-  </main>
+<section class="card">
+<div class="card-top">
+<div><b id="chapterTitle">Chapter 5 • Tissues & Integumentary</b><h2 id="modeTitle">Tap an answer for instant feedback</h2></div>
+<div class="chips">
+<button class="chip active" id="mcqTab">MCQs 25</button>
+<button class="chip" id="saTab">Short Answers 5</button>
+<button class="chip shuffle" id="shuffleBtn">↻ Shuffle</button>
+</div>
+</div>
+<div class="progress"><div id="progressBar"></div></div>
 
-  <div class="modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrTitle">
-    <div class="card">
-      <h2 id="qrTitle">Nursing New Zealand</h2>
-      <p>Scan the QR code or open the channel directly.</p>
-      <img
-        class="qr"
-        alt="QR code for Nursing New Zealand YouTube channel"
-        src="https://api.qrserver.com/v1/create-qr-code/?size=700x700&margin=18&data=https%3A%2F%2Fyoutube.com%2F%40nursingnewzealand%3Fsi%3DrmBQow8jbe6t5Ps0"
-      />
-      <a class="link" href="https://youtube.com/@nursingnewzealand?si=rmBQow8jbe6t5Ps0" target="_blank" rel="noopener noreferrer">
-        youtube.com/@nursingnewzealand
-      </a>
-      <div class="modal-actions">
-        <a class="btn subscribe" href="https://youtube.com/@nursingnewzealand?si=rmBQow8jbe6t5Ps0" target="_blank" rel="noopener noreferrer">▶ Open YouTube</a>
-        <button class="btn close" id="closeQr" type="button">Close</button>
-      </div>
-    </div>
-  </div>
+<div id="mcqView">
+<div class="qmeta" id="qMeta"></div>
+<div class="timer" id="timer">⏱ Time for this question: 0:00</div>
+<div class="question" id="question"></div>
+<div id="options"></div>
+<div class="feedback" id="feedback"></div>
+<div class="nav"><button class="prev" id="prev">← Previous</button><button class="next" id="next">Next →</button></div>
+</div>
 
-  <script>
-    const frame = document.getElementById('examHub');
-    const modal = document.getElementById('qrModal');
-    const openQr = document.getElementById('openQr');
-    const closeQr = document.getElementById('closeQr');
-    const shuffleAll = document.getElementById('shuffleAll');
+<div class="sa" id="saView">
+<div class="qmeta" id="saMeta"></div>
+<div class="question" id="saQuestion"></div>
+<textarea id="saText" placeholder="Write your answer first..."></textarea>
+<button class="chip active" id="reveal" style="margin-top:14px">Reveal model answer</button>
+<div class="model" id="model"></div>
+<div class="nav"><button class="prev" id="saPrev">← Previous</button><button class="next" id="saNext">Next →</button></div>
+</div>
+</section>
+</main>
 
-    openQr.addEventListener('click', () => modal.classList.add('open'));
-    closeQr.addEventListener('click', () => modal.classList.remove('open'));
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.remove('open');
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') modal.classList.remove('open');
-    });
+<div class="modal" id="qrModal"><div class="modal-card"><h2>Nursing New Zealand</h2><p>Scan to open our YouTube channel.</p><img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=700x700&margin=18&data=https%3A%2F%2Fyoutube.com%2F%40nursingnewzealand" alt="QR code"><p><a href="https://youtube.com/@nursingnewzealand" target="_blank">youtube.com/@nursingnewzealand</a></p><button class="btn teal" id="closeQr">Close</button></div></div>
 
-    // Reloading starts a fresh quiz session. The embedded exam hub shuffles
-    // its question order on a fresh load/reset, so this refreshes both MCQs
-    // and the question set together.
-    shuffleAll.addEventListener('click', () => {
-      const base = 'https://nursing-nz-exam-hub.beigimustafa77.chatgpt.site';
-      frame.src = base + '?shuffle=' + Date.now();
-    });
-  </script>
-</body>
-</html>
+<script>
+const DB={
+5:{title:"Tissues & Integumentary",q:[
+["Which tissue lines surfaces and cavities?",["Epithelial","Muscle","Nervous","Bone"],0,"Epithelial tissue covers surfaces, lines cavities and forms glands."],
+["Which tissue mainly supports, binds and protects?",["Connective","Epithelial","Muscle","Nervous"],0,"Connective tissue supports, binds and protects body structures."],
+["Which tissue contracts to produce movement?",["Muscle","Nervous","Epithelial","Adipose"],0,"Muscle tissue contracts to create movement."],
+["Nervous tissue mainly:",["Communicates","Stores calcium","Forms skin surface","Carries oxygen"],0,"Nervous tissue detects stimuli and transmits electrical signals."],
+["Simple epithelium has:",["One cell layer","Many cell layers","No cells","Only flat cells"],0,"Simple means one layer."],
+["Stratified epithelium has:",["Multiple layers","One layer","No basement membrane","Only cuboidal cells"],0,"Stratified means more than one cell layer."],
+["Squamous cells are:",["Flat","Cube-shaped","Tall","Spindle-shaped"],0,"Squamous epithelial cells are thin and flat."],
+["Cuboidal cells are:",["Cube-shaped","Flat","Tall","Branched"],0,"Cuboidal cells are approximately cube-shaped."],
+["Columnar cells are:",["Tall","Flat","Round","Spindle-shaped"],0,"Columnar epithelial cells are taller than they are wide."],
+["Alveoli are mainly lined by:",["Simple squamous epithelium","Stratified squamous","Simple cuboidal","Transitional epithelium"],0,"Thin simple squamous epithelium allows rapid gas diffusion."],
+["The epidermis is mainly:",["Stratified squamous epithelium","Simple squamous","Cardiac muscle","Adipose"],0,"The epidermis is protective stratified squamous epithelium."],
+["Epithelial tissue is avascular, meaning it:",["Has no blood vessels","Has no nerves","Has no cells","Has no basement membrane"],0,"Epithelial tissue lacks its own blood vessels."],
+["Epithelial cells receive nutrients mainly by:",["Diffusion from underlying connective tissue","Direct arteries","Lymph only","Sweat glands"],0,"Nutrients diffuse from capillaries in underlying connective tissue."],
+["Connective tissue contains cells plus:",["Extracellular matrix","Keratin only","Myelin only","Haemoglobin only"],0,"Connective tissue is characterised by extracellular matrix."],
+["Adipose tissue mainly stores:",["Fat","Calcium","Oxygen","Bile"],0,"Adipose tissue stores lipids and also cushions and insulates."],
+["Tendons connect:",["Muscle to bone","Bone to bone","Nerve to muscle","Skin to muscle"],0,"Tendons attach muscle to bone."],
+["Ligaments connect:",["Bone to bone","Muscle to bone","Skin to bone","Nerve to bone"],0,"Ligaments connect bones at joints."],
+["Skeletal muscle is:",["Striated and voluntary","Non-striated and voluntary","Striated and involuntary","Non-striated and involuntary"],0,"Skeletal muscle is striated and generally voluntary."],
+["Cardiac muscle is found in the:",["Heart","Intestine","Skin","Tendon"],0,"Cardiac muscle forms the myocardium."],
+["Smooth muscle is found in:",["Walls of hollow organs","Epidermis","Bones","Tendons"],0,"Smooth muscle occurs in hollow organs and blood vessels."],
+["The integumentary system includes:",["Skin, hair, nails and glands","Heart and vessels","Bones and joints","Brain and spinal cord"],0,"Skin and its appendages form the integumentary system."],
+["The outer skin layer is the:",["Epidermis","Dermis","Hypodermis","Periosteum"],0,"The epidermis is the superficial layer."],
+["The layer beneath the epidermis is the:",["Dermis","Hypodermis","Pleura","Pericardium"],0,"The dermis lies beneath the epidermis."],
+["The hypodermis contains much:",["Adipose tissue","Cardiac muscle","Simple squamous epithelium","Compact bone"],0,"The hypodermis contains abundant adipose tissue."],
+["Sweat helps regulate body temperature mainly by:",["Evaporation","Clotting","Filtration","Osmosis into blood"],0,"Evaporation of sweat removes heat from the body."]
+],sa:[
+["Name the four main tissue types.","Epithelial, connective, muscle and nervous tissue."],
+["Explain how epithelial tissues are named.","By number of layers (simple/stratified) and cell shape at the apical surface (squamous/cuboidal/columnar)."],
+["State the main functions of epithelial tissue.","Protection, absorption, filtration, secretion, covering and lining."],
+["Name the main layers shown in a skin cross-section.","Epidermis, dermis and hypodermis/subcutaneous layer."],
+["Give four major functions of the skin.","Protection, temperature regulation, sensation and vitamin D production; it also limits water loss and supports excretion."]
+]},
+6:{title:"Blood",q:[
+["The liquid matrix of blood is:",["Plasma","Serum only","Lymph","Cytosol"],0,"Plasma is the fluid extracellular matrix of blood."],
+["The most numerous formed elements are:",["Red blood cells","White blood cells","Platelets","Neutrophils"],0,"Erythrocytes are the most numerous formed elements."],
+["The main function of red blood cells is to:",["Transport oxygen","Produce antibodies","Form fibrin","Digest bacteria"],0,"RBCs transport oxygen using haemoglobin."],
+["Haemoglobin is found mainly in:",["Red blood cells","Platelets","Plasma proteins","Lymphocytes"],0,"Haemoglobin is packed inside erythrocytes."],
+["A mature red blood cell normally:",["Lacks a nucleus","Has a large nucleus","Has mitochondria","Divides by mitosis"],0,"Mature human erythrocytes lack a nucleus."],
+["The biconcave shape of RBCs helps:",["Increase surface area for gas exchange","Store fat","Make antibodies","Produce platelets"],0,"Biconcavity increases surface area and flexibility."],
+["White blood cells mainly help with:",["Defence against infection","Oxygen transport","Blood clotting","Heat production"],0,"Leukocytes participate in immune defence."],
+["Platelets are important for:",["Blood clotting","Carrying oxygen","Producing bile","Digesting fat"],0,"Platelets form plugs and support coagulation."],
+["Haematocrit measures the percentage of blood made of:",["Red blood cells","Plasma proteins","White blood cells","Platelets"],0,"Haematocrit is the packed red-cell percentage."],
+["If haematocrit is 45%, non-RBC blood is:",["55%","45%","100%","5%"],0,"100 - 45 = 55%."],
+["Plasma is mostly:",["Water","Protein","Red cells","Fat"],0,"Plasma is predominantly water."],
+["Albumin mainly helps maintain:",["Osmotic pressure","Electrical impulses","Bone density","Blood clot colour"],0,"Albumin is a major contributor to plasma oncotic pressure."],
+["Fibrinogen is important in:",["Clotting","Oxygen transport","Immunity only","Nerve conduction"],0,"Fibrinogen is converted to fibrin during coagulation."],
+["The oxygenated colour of blood is typically:",["Scarlet red","Blue","Green","Black"],0,"Oxyhaemoglobin gives arterial blood a brighter scarlet-red appearance."],
+["Deoxygenated blood is typically:",["Darker red","Blue","White","Yellow"],0,"Deoxygenated blood is dark red, not blue."],
+["Blood cells are produced mainly in:",["Red bone marrow","Yellow bone marrow only","Liver in normal adults","Skin"],0,"Haematopoiesis occurs mainly in red bone marrow."],
+["A neutrophil is a type of:",["White blood cell","Red blood cell","Platelet","Plasma protein"],0,"Neutrophils are leukocytes."],
+["Lymphocytes include cells involved in:",["Adaptive immunity","Oxygen transport","Bone formation","Sweating"],0,"B and T lymphocytes are central to adaptive immune responses."],
+["The universal red-cell donor type is commonly:",["O negative","AB positive","A positive","B positive"],0,"O negative RBCs lack A, B and Rh(D) antigens."],
+["The universal red-cell recipient type is commonly:",["AB positive","O negative","A negative","B negative"],0,"AB positive can receive all major ABO/Rh red-cell types in standard compatibility teaching."],
+["Rh-negative means the RBCs lack:",["Rh(D) antigen","Haemoglobin","Cell membrane","Iron"],0,"Rh-negative refers to absence of the D antigen."],
+["Agglutination can occur when:",["Incompatible blood types are mixed","RBCs carry oxygen","Platelets form normally","Plasma is diluted"],0,"Antigen-antibody reactions can cause red cells to clump."],
+["Serum differs from plasma because serum lacks most:",["Clotting factors","Water","Electrolytes","Antibodies"],0,"Serum is plasma after clotting and lacks fibrinogen and several clotting factors."],
+["A blood clot is strengthened by a mesh of:",["Fibrin","Albumin","Haemoglobin","Keratin"],0,"Fibrin strands stabilise the clot."],
+["Blood helps maintain homeostasis by:",["Transport, regulation and protection","Only movement","Only digestion","Only sensation"],0,"Blood transports substances, regulates internal conditions and protects the body."]
+],sa:[
+["State the main components of blood.","Plasma plus formed elements: red blood cells, white blood cells and platelets."],
+["Explain the main function of haemoglobin.","It binds and transports oxygen in red blood cells; it also contributes to carbon dioxide transport and acid-base buffering."],
+["What does Rh-negative mean?","The red blood cells do not carry the Rh(D) antigen."],
+["Describe the basic role of platelets in clotting.","Platelets adhere to damaged vessels, form a platelet plug and support activation of the coagulation cascade and fibrin formation."],
+["Define haematocrit.","The percentage of total blood volume occupied by red blood cells."]
+]},
+7:{title:"Cardiovascular & Lymphatic",q:[
+["Deoxygenated blood enters the heart first through the:",["Right atrium","Left atrium","Left ventricle","Aorta"],0,"Systemic venous blood enters the right atrium."],
+["The chamber that pumps blood to the lungs is the:",["Right ventricle","Left ventricle","Right atrium","Left atrium"],0,"The right ventricle pumps into the pulmonary trunk."],
+["The chamber that pumps blood to the systemic circulation is the:",["Left ventricle","Right ventricle","Left atrium","Right atrium"],0,"The left ventricle pumps blood into the aorta."],
+["The tricuspid valve lies between the:",["Right atrium and right ventricle","Left atrium and left ventricle","Aorta and left ventricle","Pulmonary trunk and right ventricle"],0,"The right AV valve is the tricuspid valve."],
+["The mitral valve lies between the:",["Left atrium and left ventricle","Right atrium and right ventricle","Right ventricle and pulmonary trunk","Left ventricle and aorta"],0,"The left AV valve is the mitral/bicuspid valve."],
+["The pulmonary semilunar valve prevents backflow into the:",["Right ventricle","Right atrium","Left ventricle","Left atrium"],0,"It prevents blood returning from the pulmonary trunk to the right ventricle."],
+["The aortic semilunar valve prevents backflow into the:",["Left ventricle","Right ventricle","Left atrium","Right atrium"],0,"It prevents backflow from the aorta into the left ventricle."],
+["The lub sound is mainly caused by closure of the:",["AV valves","Semilunar valves","Venae cavae","Coronary arteries"],0,"S1 or lub is mainly due to AV valve closure."],
+["The dub sound is mainly caused by closure of the:",["Semilunar valves","AV valves","Atria","Venae cavae"],0,"S2 or dub is mainly due to semilunar valve closure."],
+["The artery carrying deoxygenated blood is the:",["Pulmonary artery","Femoral artery","Radial artery","Coronary artery"],0,"Pulmonary arteries carry deoxygenated blood to the lungs."],
+["The veins carrying oxygenated blood are the:",["Pulmonary veins","Venae cavae","Femoral veins","Jugular veins"],0,"Pulmonary veins return oxygenated blood to the left atrium."],
+["The narrowest vessels where exchange occurs are:",["Capillaries","Arteries","Veins","Aorta"],0,"Capillary walls allow exchange with tissues."],
+["Arteries generally carry blood:",["Away from the heart","Toward the heart","Only oxygenated","Only deoxygenated"],0,"Arteries are defined by direction away from the heart."],
+["Veins generally carry blood:",["Toward the heart","Away from the heart","Only oxygenated","Only deoxygenated"],0,"Veins return blood to the heart."],
+["Coronary circulation supplies the:",["Myocardium","Lungs","Brain only","Skin"],0,"Coronary vessels supply heart muscle."],
+["Pulmonary circulation runs between the heart and:",["Lungs","Kidneys","Brain","Skin"],0,"Pulmonary circulation carries blood to and from the lungs."],
+["Systemic circulation supplies:",["Body tissues except the pulmonary circuit","Only the lungs","Only the heart wall","Only the liver"],0,"Systemic circulation serves the body tissues."],
+["The largest artery is the:",["Aorta","Pulmonary vein","Vena cava","Carotid vein"],0,"The aorta is the largest artery."],
+["The venae cavae empty into the:",["Right atrium","Left atrium","Right ventricle","Left ventricle"],0,"Superior and inferior vena cava enter the right atrium."],
+["Systole refers mainly to:",["Contraction","Relaxation","Clotting","Diffusion"],0,"Systole is the contraction phase."],
+["Diastole refers mainly to:",["Relaxation","Contraction","Filtration","Coagulation"],0,"Diastole is the relaxation/filling phase."],
+["The lymphatic system helps return excess:",["Tissue fluid to the bloodstream","Air to the lungs","Bile to the liver","Urine to the kidneys"],0,"Lymphatics return excess interstitial fluid to blood."],
+["Lymph nodes help:",["Filter lymph and support immune responses","Pump blood","Make bile","Exchange oxygen in alveoli"],0,"Lymph nodes filter lymph and contain immune cells."],
+["The spleen is part of the:",["Lymphatic system","Respiratory system","Integumentary system","Urinary system"],0,"The spleen is a lymphatic/immune organ."],
+["Valves in veins mainly help:",["Prevent backflow","Increase arterial pressure","Create RBCs","Exchange gases"],0,"Venous valves promote one-way return toward the heart."]
+],sa:[
+["Trace blood flow through the four heart chambers.","Right atrium → right ventricle → lungs → left atrium → left ventricle → body."],
+["Name the four main heart valves.","Tricuspid, pulmonary semilunar, mitral/bicuspid and aortic semilunar valves."],
+["Explain the difference between arteries, veins and capillaries.","Arteries carry blood away from the heart, veins return it to the heart, and capillaries are thin exchange vessels."],
+["What is coronary circulation?","The blood supply to the myocardium through coronary arteries and veins."],
+["State two major functions of the lymphatic system.","Return excess tissue fluid to the bloodstream and support immune defence; it also absorbs some dietary fats."]
+]},
+8:{title:"Respiratory System",q:[
+["The main function of the respiratory system is:",["Gas exchange","Blood clotting","Bone production","Urine formation"],0,"The respiratory system brings in oxygen and removes carbon dioxide."],
+["The voice box is the:",["Larynx","Pharynx","Trachea","Bronchus"],0,"The larynx contains the vocal folds."],
+["The windpipe is the:",["Trachea","Oesophagus","Larynx","Pharynx"],0,"The trachea conducts air toward the bronchi."],
+["The trachea divides into the right and left:",["Primary bronchi","Alveoli","Pleurae","Capillaries"],0,"The primary bronchi enter the lungs."],
+["Gas exchange occurs mainly in the:",["Alveoli","Trachea","Larynx","Nasal cavity"],0,"Alveoli are the principal gas-exchange surfaces."],
+["Alveoli are mainly lined by:",["Simple squamous epithelium","Stratified squamous","Cuboidal epithelium only","Cartilage"],0,"Thin simple squamous cells minimise diffusion distance."],
+["Oxygen moves from alveoli into blood mainly by:",["Diffusion","Active transport","Osmosis","Filtration"],0,"Oxygen follows its partial-pressure gradient by diffusion."],
+["Carbon dioxide moves from blood into alveoli mainly by:",["Diffusion","Active transport","Endocytosis","Filtration"],0,"CO2 diffuses down its partial-pressure gradient."],
+["The muscle most important for quiet inspiration is the:",["Diaphragm","Biceps","Rectus abdominis","Deltoid"],0,"Diaphragm contraction increases thoracic volume."],
+["During inspiration the diaphragm:",["Contracts and flattens","Relaxes and domes upward","Closes the trachea","Compresses the lungs"],0,"Contraction pulls it downward and increases thoracic volume."],
+["During quiet expiration the diaphragm generally:",["Relaxes","Contracts strongly","Closes the larynx","Opens bronchi actively"],0,"Quiet expiration is largely passive as inspiratory muscles relax."],
+["The pleura are membranes associated with the:",["Lungs","Heart chambers","Kidneys","Skin"],0,"Visceral and parietal pleura surround the lungs and thoracic wall."],
+["Pleural fluid mainly:",["Reduces friction","Carries oxygen in blood","Forms mucus","Produces surfactant"],0,"Pleural fluid allows smooth movement of lung surfaces."],
+["Surfactant helps prevent alveolar:",["Collapse","Infection only","Bleeding","Clotting"],0,"Surfactant reduces surface tension and helps keep alveoli open."],
+["The epiglottis helps prevent food entering the:",["Airway","Aorta","Left atrium","Pleural cavity"],0,"The epiglottis helps protect the airway during swallowing."],
+["The pharynx is shared by the respiratory and:",["Digestive systems","Urinary systems","Endocrine systems","Skeletal systems"],0,"The pharynx conducts both air and swallowed material."],
+["The nasal cavity helps:",["Warm, humidify and filter air","Pump blood","Produce RBCs","Absorb fats"],0,"The nose conditions inspired air."],
+["Cilia in the respiratory tract help move:",["Mucus and trapped particles","Blood","Pleural fluid","Surfactant into blood"],0,"The mucociliary escalator clears debris toward the pharynx."],
+["The right lung usually has:",["Three lobes","Two lobes","One lobe","Four lobes"],0,"The right lung has superior, middle and inferior lobes."],
+["The left lung usually has:",["Two lobes","Three lobes","Four lobes","One lobe"],0,"The left lung has superior and inferior lobes."],
+["The left lung has a cardiac notch because of the:",["Heart","Liver","Spleen","Trachea"],0,"The notch accommodates the heart."],
+["External respiration means gas exchange between:",["Alveoli and pulmonary blood","Blood and body cells","Cells and mitochondria","Nose and pharynx"],0,"External respiration occurs across the respiratory membrane."],
+["Internal respiration means gas exchange between:",["Systemic blood and tissues","Alveoli and blood","Trachea and bronchi","Pleura and lung"],0,"Internal respiration occurs between systemic capillaries and tissues."],
+["Most oxygen in blood is transported bound to:",["Haemoglobin","Albumin","Fibrin","Platelets"],0,"Most oxygen is carried as oxyhaemoglobin."],
+["Carbon dioxide is removed from the body mainly by:",["Exhalation","Urination","Sweating only","Blood clotting"],0,"The lungs excrete carbon dioxide during ventilation."]
+],sa:[
+["List the main pathway of air from nose to alveoli.","Nose/nasal cavity → pharynx → larynx → trachea → bronchi → bronchioles → alveoli."],
+["Explain gas exchange at the alveoli.","Oxygen diffuses from alveolar air into pulmonary capillary blood, while carbon dioxide diffuses from blood into alveoli because of partial-pressure gradients."],
+["What happens to the diaphragm during inspiration?","It contracts and flattens, increasing thoracic volume and lowering intrathoracic pressure so air moves into the lungs."],
+["State two functions of the nasal cavity.","It warms, humidifies and filters inspired air; any two are acceptable."],
+["What is the function of surfactant?","It reduces surface tension in alveoli and helps prevent alveolar collapse."]
+]}
+};
+
+const state={chapter:5,mode:"mcq",questions:[],sa:[],i:0,si:0,answered:0,correct:0,start:Date.now()};
+const $=id=>document.getElementById(id);
+function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
+function prepQuestions(ch){
+  return shuffle(DB[ch].q).map(([question,opts,correct,explanation])=>{
+    const packed=opts.map((text,index)=>({text,ok:index===correct}));
+    const shuffled=shuffle(packed);
+    return {question,options:shuffled.map(x=>x.text),correct:shuffled.findIndex(x=>x.ok),explanation,done:false};
+  });
+}
+function prepSA(ch){return shuffle(DB[ch].sa.map(x=>[...x]))}
+function reset(ch=state.chapter){
+  state.chapter=ch;state.questions=prepQuestions(ch);state.sa=prepSA(ch);state.i=0;state.si=0;state.answered=0;state.correct=0;state.start=Date.now();
+  document.querySelectorAll(".chapter").forEach(b=>b.classList.toggle("active",Number(b.dataset.c)===ch));
+  $("chapterTitle").textContent="Chapter "+ch+" • "+DB[ch].title;
+  render();
+}
+function render(){
+  if(state.mode==="mcq"){renderMCQ()}else{renderSA()}
+  $("score").textContent=state.correct+"/25";
+  const p=Math.round((state.answered/25)*100),a=state.answered?Math.round((state.correct/state.answered)*100):0;
+  $("accuracy").textContent="Progress: "+p+"% · Accuracy: "+a+"%";
+}
+function renderMCQ(){
+  $("mcqView").style.display="block";$("saView").style.display="none";$("mcqTab").classList.add("active");$("saTab").classList.remove("active");
+  const q=state.questions[state.i];$("qMeta").textContent="Question "+(state.i+1)+" of 25";$("question").textContent=q.question;$("feedback").style.display="none";
+  $("progressBar").style.width=((state.i+1)/25*100)+"%";
+  $("options").innerHTML=q.options.map((o,idx)=>'<button class="option" data-i="'+idx+'"><span class="letter">'+String.fromCharCode(65+idx)+'</span><span>'+o+'</span></button>').join("");
+  document.querySelectorAll(".option").forEach(b=>b.onclick=()=>answer(Number(b.dataset.i)));
+  $("prev").disabled=state.i===0;$("next").textContent=state.i===24?"Finish":"Next →";state.start=Date.now();
+}
+function answer(idx){
+  const q=state.questions[state.i];if(q.done)return;q.done=true;state.answered++;if(idx===q.correct)state.correct++;
+  document.querySelectorAll(".option").forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add("correct");else if(i===idx)b.classList.add("wrong")});
+  $("feedback").style.display="block";$("feedback").innerHTML=(idx===q.correct?"✅ Correct. ":"❌ Not quite. ")+q.explanation;renderScoreOnly();
+}
+function renderScoreOnly(){
+  $("score").textContent=state.correct+"/25";const p=Math.round((state.answered/25)*100),a=state.answered?Math.round((state.correct/state.answered)*100):0;$("accuracy").textContent="Progress: "+p+"% · Accuracy: "+a+"%";
+}
+function renderSA(){
+  $("mcqView").style.display="none";$("saView").style.display="block";$("mcqTab").classList.remove("active");$("saTab").classList.add("active");
+  const q=state.sa[state.si];$("saMeta").textContent="Short Answer "+(state.si+1)+" of 5";$("saQuestion").textContent=q[0];$("saText").value="";$("model").style.display="none";$("model").textContent=q[1];$("progressBar").style.width=((state.si+1)/5*100)+"%";
+}
+document.querySelectorAll(".chapter").forEach(b=>b.onclick=()=>reset(Number(b.dataset.c)));
+$("shuffleBtn").onclick=()=>reset(state.chapter);$("globalShuffle").onclick=()=>reset(state.chapter);
+$("mcqTab").onclick=()=>{state.mode="mcq";render()};$("saTab").onclick=()=>{state.mode="sa";render()};
+$("prev").onclick=()=>{if(state.i>0){state.i--;renderMCQ()}};
+$("next").onclick=()=>{if(state.i<24){state.i++;renderMCQ()}};
+$("saPrev").onclick=()=>{if(state.si>0){state.si--;renderSA()}};
+$("saNext").onclick=()=>{if(state.si<4){state.si++;renderSA()}};
+$("reveal").onclick=()=>{$("model").style.display="block"};
+$("qrBtn").onclick=()=>$("qrModal").classList.add("open");$("closeQr").onclick=()=>$("qrModal").classList.remove("open");$("qrModal").onclick=e=>{if(e.target.id==="qrModal")$("qrModal").classList.remove("open")};
+setInterval(()=>{if(state.mode==="mcq"){const s=Math.floor((Date.now()-state.start)/1000);$("timer").textContent="⏱ Time for this question: "+Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}},1000);
+reset(5);
+</script>
+</body></html>
