@@ -84,8 +84,29 @@
       from{transform:translateX(-100%)}
       to{transform:translateX(100vw)}
     }
-    .framewrap{height:calc(100vh - 92px);background:#fff}
+    .framewrap{height:calc(100vh - 92px);background:#fff;position:relative;overflow:hidden}
     iframe{display:block;border:0;width:100%;height:100%;background:#fff}
+    .iframe-mask{
+      position:absolute;
+      z-index:20;
+      pointer-events:none;
+      background:#092d4f;
+      border-radius:10px;
+    }
+    .mask-news{
+      top:34px;
+      left:36.1%;
+      width:88px;
+      height:42px;
+    }
+    .mask-subscribe{
+      top:172px;
+      right:3.8%;
+      width:295px;
+      height:78px;
+      background:#061b33;
+      border-radius:14px;
+    }
     .modal{
       position:fixed;inset:0;z-index:1000;
       display:none;align-items:center;justify-content:center;
@@ -125,17 +146,25 @@
     }
     .modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
     .close{background:#20353c}
+    @media(max-width:1100px){
+      .mask-news{top:32px;left:35%;width:78px;height:40px}
+      .mask-subscribe{top:168px;right:3.5%;width:250px;height:72px}
+    }
     @media(max-width:720px){
       .topbar{min-height:132px;padding:0 10px 9px}
       .actions{width:100%;gap:7px}
       .btn{min-height:42px;padding:0 12px;font-size:13px;flex:1 1 30%}
       .framewrap{height:calc(100vh - 132px)}
+      .mask-news{top:31px;left:34%;width:72px;height:38px}
+      .mask-subscribe{top:164px;right:3%;width:210px;height:68px}
     }
     @media(max-width:430px){
       .btn{flex:1 1 46%}
       .shuffle{flex-basis:96%}
       .topbar{min-height:176px}
       .framewrap{height:calc(100vh - 176px)}
+      .mask-news{display:none}
+      .mask-subscribe{top:162px;right:10px;width:185px;height:64px}
     }
   </style>
 </head>
@@ -163,6 +192,8 @@
       src="https://nursing-nz-exam-hub.beigimustafa77.chatgpt.site"
       allow="fullscreen"
     ></iframe>
+    <div class="iframe-mask mask-news" aria-hidden="true"></div>
+    <div class="iframe-mask mask-subscribe" aria-hidden="true"></div>
   </main>
 
   <div class="modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrTitle">
