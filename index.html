@@ -361,7 +361,7 @@ const DB={
 ]}
 };
 
-const state={chapter:5,mode:"mcq",questions:[],sa:[],i:0,si:0,answered:0,correct:0,start:Date.now(),mistakes:[],reviewMode:false};
+const state={chapter:5,mode:"mcq",questions:[],sa:[],i:0,si:0,answered:0,correct:0,start:Date.now(),mistakes:[],reviewMode:false,reviewReturn:null};
 const $=id=>document.getElementById(id);
 function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
 function prepQuestions(ch){
@@ -410,7 +410,7 @@ document.querySelectorAll(".chapter").forEach(b=>b.onclick=()=>reset(Number(b.da
 $("shuffleBtn").onclick=()=>reset(state.chapter);$("globalShuffle").onclick=()=>reset(state.chapter);
 $("mcqTab").onclick=()=>{state.mode="mcq";render()};$("saTab").onclick=()=>{state.mode="sa";render()};
 $("prev").onclick=()=>{if(state.i>0){state.i--;renderMCQ()}};
-$("next").onclick=()=>{if(state.i<state.questions.length-1){state.i++;renderMCQ()}else if(state.reviewMode){$("feedback").style.display="block";$("feedback").innerHTML=state.mistakes.length?"Review complete. You still have "+state.mistakes.length+" question(s) to practise.":"✅ Review complete — all reviewed mistakes are now correct.";}};
+$("next").onclick=()=>{if(state.i<state.questions.length-1){state.i++;renderMCQ()}else if(state.reviewMode){finishReview()}};
 $("saPrev").onclick=()=>{if(state.si>0){state.si--;renderSA()}};
 $("saNext").onclick=()=>{if(state.si<4){state.si++;renderSA()}};
 $("reveal").onclick=()=>{$("model").style.display="block"};
@@ -433,6 +433,14 @@ $("mistakeModal").onclick=e=>{if(e.target.id==="mistakeModal")$("mistakeModal").
 
 function startMistakeReview(){
   if(!state.mistakes.length)return;
+  if(!state.reviewMode){
+    state.reviewReturn={
+      questions:state.questions,
+      i:state.i,
+      answered:state.answered,
+      correct:state.correct
+    };
+  }
   state.questions=shuffle(state.mistakes.map(m=>{
     const packed=m.options.map((text,index)=>({text,ok:index===m.correct}));
     const shuffled=shuffle(packed);
@@ -443,6 +451,41 @@ function startMistakeReview(){
   $("modeTitle").textContent="Answer your mistakes again";
   $("mistakeModal").classList.remove("open");
   renderMCQ();renderScoreOnly();
+}
+function finishReview(){
+  const remaining=[...state.mistakes];
+  const reviewed=state.questions.length;
+  const reviewCorrect=state.correct;
+
+  if(state.reviewReturn){
+    state.questions=state.reviewReturn.questions;
+    state.i=state.reviewReturn.i;
+    state.answered=state.reviewReturn.answered;
+    state.correct=state.reviewReturn.correct;
+  }
+  state.reviewReturn=null;
+  state.reviewMode=false;
+  state.mode="mcq";
+  state.mistakes=remaining;
+
+  $("chapterTitle").textContent="Chapter "+state.chapter+" • "+DB[state.chapter].title;
+  $("modeTitle").textContent="Tap an answer for instant feedback";
+
+  const list=$("mistakeList");
+  if(remaining.length===0){
+    list.innerHTML="<p style='font-size:18px'><b>✅ Review complete!</b></p><p>You answered all "+reviewed+" reviewed question(s) correctly. No mistakes remain.</p>";
+    $("retryMistakes").style.display="none";
+    $("resetReview").style.display="none";
+  }else{
+    list.innerHTML="<p style='font-size:18px'><b>Review complete</b></p><p>You got <b>"+reviewCorrect+" of "+reviewed+"</b> correct in this review. <b>"+remaining.length+"</b> question(s) still need practice.</p>";
+    $("retryMistakes").style.display="inline-flex";
+    $("retryMistakes").textContent="↻ Retry remaining mistakes";
+    $("resetReview").style.display="inline-flex";
+  }
+
+  renderMCQ();
+  renderScoreOnly();
+  $("mistakeModal").classList.add("open");
 }
 $("retryMistakes").onclick=startMistakeReview;
 $("resetReview").onclick=startMistakeReview;
