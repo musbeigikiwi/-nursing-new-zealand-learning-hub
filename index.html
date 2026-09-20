@@ -18,8 +18,8 @@
     html,body{margin:0;height:100%;background:var(--navy);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     body{overflow:hidden}
     .topbar{
-      min-height:110px;
-      padding:10px 14px 0;
+      min-height:92px;
+      padding:0 14px 10px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -31,14 +31,6 @@
       position:relative;
       z-index:10;
       overflow:hidden;
-    }
-    .brand{
-      color:#eaffff;
-      font-weight:800;
-      letter-spacing:.04em;
-      margin-right:auto;
-      white-space:nowrap;
-      font-size:14px;
     }
     .actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:center}
     .btn{
@@ -63,17 +55,18 @@
     .qrbtn{background:linear-gradient(135deg,var(--teal2),#08706d)}
     .shuffle{background:linear-gradient(135deg,#334dff,#1928b8)}
     .ticker{
+      order:-1;
       flex:0 0 calc(100% + 28px);
       width:calc(100% + 28px);
-      margin:0 -14px;
-      height:38px;
+      margin:0 -14px 2px;
+      height:36px;
       display:flex;
       align-items:center;
       overflow:hidden;
       white-space:nowrap;
       background:#0b8f8a;
       color:#fff;
-      border-top:1px solid rgba(255,255,255,.14);
+      border-bottom:1px solid rgba(255,255,255,.16);
       position:relative;
       z-index:11;
       font-weight:800;
@@ -91,7 +84,7 @@
       from{transform:translateX(-100%)}
       to{transform:translateX(100vw)}
     }
-    .framewrap{height:calc(100vh - 110px);background:#fff}
+    .framewrap{height:calc(100vh - 92px);background:#fff}
     iframe{display:block;border:0;width:100%;height:100%;background:#fff}
     .modal{
       position:fixed;inset:0;z-index:1000;
@@ -133,23 +126,21 @@
     .modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
     .close{background:#20353c}
     @media(max-width:720px){
-      .topbar{min-height:150px;padding:9px 10px 0}
-      .brand{width:100%;margin:0;text-align:center;font-size:13px}
+      .topbar{min-height:132px;padding:0 10px 9px}
       .actions{width:100%;gap:7px}
       .btn{min-height:42px;padding:0 12px;font-size:13px;flex:1 1 30%}
-      .framewrap{height:calc(100vh - 150px)}
+      .framewrap{height:calc(100vh - 132px)}
     }
     @media(max-width:430px){
       .btn{flex:1 1 46%}
       .shuffle{flex-basis:96%}
-      .topbar{min-height:196px}
-      .framewrap{height:calc(100vh - 196px)}
+      .topbar{min-height:176px}
+      .framewrap{height:calc(100vh - 176px)}
     }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">NURSING NEW ZEALAND • LEARNING HUB</div>
     <div class="actions">
       <a class="btn subscribe" href="https://youtube.com/@nursingnewzealand?si=rmBQow8jbe6t5Ps0" target="_blank" rel="noopener noreferrer">▶ Subscribe</a>
       <button class="btn qrbtn" id="openQr" type="button">▦ QR Code</button>
