@@ -179,7 +179,7 @@ textarea{max-width:100%}
 <button class="chapter" data-c="6"><b>Chapter 6</b><span>Blood</span></button>
 <button class="chapter" data-c="7"><b>Chapter 7</b><span>Cardiovascular & Lymphatic</span></button>
 <button class="chapter" data-c="8"><b>Chapter 8</b><span>Respiratory System</span></button>
-<div class="score">Chapter score<br><strong id="score">0/25</strong><div id="accuracy">Progress: 0% · Accuracy: 0%</div><button id="reviewMistakes" class="chip" style="width:100%;margin-top:14px;background:#e3b92f;color:#241d03">Review mistakes (0)</button></div>
+<div class="score">Chapter score<br><strong id="score">0/25</strong><div id="accuracy">Progress: 0% · Accuracy: 0%</div><button id="reviewMistakes" class="chip" style="width:100%;margin-top:14px;background:#e3b92f;color:#241d03">Review mistakes (0)</button><button id="resetChapter" class="chip" style="width:100%;margin-top:10px;background:#c9424a;color:#fff">↻ Reset Chapter</button></div>
 </aside>
 
 <section class="card">
@@ -223,7 +223,7 @@ textarea{max-width:100%}
 </footer>
 <div class="page-end" aria-hidden="true"></div>
 
-<div class="modal" id="mistakeModal"><div class="modal-card" style="max-width:720px;text-align:left"><h2>Review mistakes</h2><div id="mistakeList"></div><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px"><button class="btn blue" id="retryMistakes">↻ Retry mistakes</button><button class="btn teal" id="closeMistakes">Close</button></div></div></div><div class="modal" id="qrModal"><div class="modal-card"><h2>Nursing New Zealand</h2><p>Scan to open our YouTube channel.</p><img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=700x700&margin=18&data=https%3A%2F%2Fyoutube.com%2F%40nursingnewzealand" alt="QR code"><p><a href="https://youtube.com/@nursingnewzealand" target="_blank">youtube.com/@nursingnewzealand</a></p><button class="btn teal" id="closeQr">Close</button></div></div>
+<div class="modal" id="mistakeModal"><div class="modal-card" style="max-width:720px;text-align:left"><h2>Review mistakes</h2><div id="mistakeList"></div><div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:18px"><button class="btn blue" id="retryMistakes">▶ Start review quiz</button><button class="btn" id="resetReview" style="background:#8a5a12">↻ Reset review</button><button class="btn teal" id="closeMistakes">Close</button></div></div></div><div class="modal" id="qrModal"><div class="modal-card"><h2>Nursing New Zealand</h2><p>Scan to open our YouTube channel.</p><img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=700x700&margin=18&data=https%3A%2F%2Fyoutube.com%2F%40nursingnewzealand" alt="QR code"><p><a href="https://youtube.com/@nursingnewzealand" target="_blank">youtube.com/@nursingnewzealand</a></p><button class="btn teal" id="closeQr">Close</button></div></div>
 
 <script>
 const DB={
@@ -380,25 +380,27 @@ function reset(ch=state.chapter){
 }
 function render(){
   if(state.mode==="mcq"){renderMCQ()}else{renderSA()}
-  $("score").textContent=state.correct+"/25";
-  const p=Math.round((state.answered/25)*100),a=state.answered?Math.round((state.correct/state.answered)*100):0;
-  $("accuracy").textContent="Progress: "+p+"% · Accuracy: "+a+"%";$("reviewMistakes").textContent="Review mistakes ("+state.mistakes.length+")";
+  const total=state.reviewMode?Math.max(state.questions.length,1):25;
+  $("score").textContent=state.correct+"/"+total;
+  const p=Math.round((state.answered/total)*100),a=state.answered?Math.round((state.correct/state.answered)*100):0;
+  $("accuracy").textContent=(state.reviewMode?"Review progress: ":"Progress: ")+p+"% · Accuracy: "+a+"%";$("reviewMistakes").textContent="Review mistakes ("+state.mistakes.length+")";
 }
 function renderMCQ(){
   $("mcqView").style.display="block";$("saView").style.display="none";$("mcqTab").classList.add("active");$("saTab").classList.remove("active");
-  const q=state.questions[state.i];$("qMeta").textContent="Question "+(state.i+1)+" of 25";$("question").textContent=q.question;$("feedback").style.display="none";
-  $("progressBar").style.width=((state.i+1)/25*100)+"%";
+  const q=state.questions[state.i];const total=state.questions.length;$("qMeta").textContent=(state.reviewMode?"Review question ":"Question ")+(state.i+1)+" of "+total;$("question").textContent=q.question;$("feedback").style.display="none";
+  $("progressBar").style.width=((state.i+1)/Math.max(total,1)*100)+"%";
   $("options").innerHTML=q.options.map((o,idx)=>'<button class="option" data-i="'+idx+'"><span class="letter">'+String.fromCharCode(65+idx)+'</span><span>'+o+'</span></button>').join("");
   document.querySelectorAll(".option").forEach(b=>b.onclick=()=>answer(Number(b.dataset.i)));
-  $("prev").disabled=state.i===0;$("next").textContent=state.i===24?"Finish":"Next →";state.start=Date.now();
+  $("prev").disabled=state.i===0;$("next").textContent=state.i===state.questions.length-1?"Finish":"Next →";state.start=Date.now();
 }
 function answer(idx){
-  const q=state.questions[state.i];if(q.done)return;q.done=true;state.answered++;if(idx===q.correct){state.correct++;}else{state.mistakes.push({question:q.question,options:[...q.options],correct:q.correct,explanation:q.explanation});}
+  const q=state.questions[state.i];if(q.done)return;q.done=true;state.answered++;q.reviewWrong=idx!==q.correct;if(idx===q.correct){state.correct++;}else if(!state.reviewMode){state.mistakes.push({question:q.question,options:[...q.options],correct:q.correct,explanation:q.explanation});}
+  if(state.reviewMode){state.mistakes=state.questions.filter(x=>!x.done||x.reviewWrong).map(x=>({question:x.question,options:[...x.options],correct:x.correct,explanation:x.explanation}));}
   document.querySelectorAll(".option").forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add("correct");else if(i===idx)b.classList.add("wrong")});
   $("feedback").style.display="block";$("feedback").innerHTML=(idx===q.correct?"✅ Correct. ":"❌ Not quite. ")+q.explanation+"<div style=\'margin-top:10px;font-weight:800;color:#14737d\'>Keep going — every question strengthens your knowledge.</div>";renderScoreOnly();
 }
 function renderScoreOnly(){
-  $("score").textContent=state.correct+"/25";const p=Math.round((state.answered/25)*100),a=state.answered?Math.round((state.correct/state.answered)*100):0;$("accuracy").textContent="Progress: "+p+"% · Accuracy: "+a+"%";$("reviewMistakes").textContent="Review mistakes ("+state.mistakes.length+")";
+  const total=state.reviewMode?Math.max(state.questions.length,1):25;$("score").textContent=state.correct+"/"+total;const p=Math.round((state.answered/total)*100),a=state.answered?Math.round((state.correct/state.answered)*100):0;$("accuracy").textContent=(state.reviewMode?"Review progress: ":"Progress: ")+p+"% · Accuracy: "+a+"%";$("reviewMistakes").textContent="Review mistakes ("+state.mistakes.length+")";
 }
 function renderSA(){
   $("mcqView").style.display="none";$("saView").style.display="block";$("mcqTab").classList.remove("active");$("saTab").classList.add("active");
@@ -408,7 +410,7 @@ document.querySelectorAll(".chapter").forEach(b=>b.onclick=()=>reset(Number(b.da
 $("shuffleBtn").onclick=()=>reset(state.chapter);$("globalShuffle").onclick=()=>reset(state.chapter);
 $("mcqTab").onclick=()=>{state.mode="mcq";render()};$("saTab").onclick=()=>{state.mode="sa";render()};
 $("prev").onclick=()=>{if(state.i>0){state.i--;renderMCQ()}};
-$("next").onclick=()=>{if(state.i<24){state.i++;renderMCQ()}};
+$("next").onclick=()=>{if(state.i<state.questions.length-1){state.i++;renderMCQ()}else if(state.reviewMode){$("feedback").style.display="block";$("feedback").innerHTML=state.mistakes.length?"Review complete. You still have "+state.mistakes.length+" question(s) to practise.":"✅ Review complete — all reviewed mistakes are now correct.";}};
 $("saPrev").onclick=()=>{if(state.si>0){state.si--;renderSA()}};
 $("saNext").onclick=()=>{if(state.si<4){state.si++;renderSA()}};
 $("reveal").onclick=()=>{$("model").style.display="block"};
@@ -416,26 +418,40 @@ $("reveal").onclick=()=>{$("model").style.display="block"};
 $("reviewMistakes").onclick=()=>{
   const list=$("mistakeList");
   if(!state.mistakes.length){
-    list.innerHTML="<p>No mistakes yet. Keep going!</p>";
+    list.innerHTML="<p><b>No mistakes to review.</b> Answer some MCQs first, and any incorrect questions will appear here for another attempt.</p>";
     $("retryMistakes").style.display="none";
+    $("resetReview").style.display="none";
   }else{
     $("retryMistakes").style.display="inline-flex";
-    list.innerHTML=state.mistakes.map((m,i)=>"<div style='padding:14px 0;border-bottom:1px solid #d8e2ef'><b>"+(i+1)+". "+m.question+"</b><div style='margin-top:6px;color:#157a58'>Correct answer: "+m.options[m.correct]+"</div><div style='margin-top:4px;color:#60708a'>"+m.explanation+"</div></div>").join("");
+    $("resetReview").style.display="inline-flex";
+    list.innerHTML="<p>You have <b>"+state.mistakes.length+"</b> mistake(s). Start Review Quiz to answer them again. Correct answers are not shown here.</p>";
   }
   $("mistakeModal").classList.add("open");
 };
 $("closeMistakes").onclick=()=>$("mistakeModal").classList.remove("open");
 $("mistakeModal").onclick=e=>{if(e.target.id==="mistakeModal")$("mistakeModal").classList.remove("open")};
-$("retryMistakes").onclick=()=>{
+
+function startMistakeReview(){
   if(!state.mistakes.length)return;
   state.questions=shuffle(state.mistakes.map(m=>{
     const packed=m.options.map((text,index)=>({text,ok:index===m.correct}));
     const shuffled=shuffle(packed);
-    return {question:m.question,options:shuffled.map(x=>x.text),correct:shuffled.findIndex(x=>x.ok),explanation:m.explanation,done:false};
+    return {question:m.question,options:shuffled.map(x=>x.text),correct:shuffled.findIndex(x=>x.ok),explanation:m.explanation,done:false,reviewWrong:false};
   }));
-  state.i=0;state.answered=0;state.correct=0;state.mistakes=[];state.reviewMode=true;state.mode="mcq";
+  state.i=0;state.answered=0;state.correct=0;state.reviewMode=true;state.mode="mcq";state.start=Date.now();
+  $("chapterTitle").textContent="Review mistakes • Chapter "+state.chapter;
+  $("modeTitle").textContent="Answer your mistakes again";
   $("mistakeModal").classList.remove("open");
   renderMCQ();renderScoreOnly();
+}
+$("retryMistakes").onclick=startMistakeReview;
+$("resetReview").onclick=startMistakeReview;
+$("resetChapter").onclick=()=>{
+  if(confirm("Reset this chapter? Score, progress and mistakes will return to zero and questions will be shuffled again.")){
+    state.mode="mcq";
+    reset(state.chapter);
+    $("modeTitle").textContent="Tap an answer for instant feedback";
+  }
 };
 
 $("qrBtn").onclick=()=>$("qrModal").classList.add("open");$("closeQr").onclick=()=>$("qrModal").classList.remove("open");$("qrModal").onclick=e=>{if(e.target.id==="qrModal")$("qrModal").classList.remove("open")};
